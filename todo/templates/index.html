@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Todo App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center text-primary mb-4">
+            📝 Django Todo App
+        </h2>
+
+        <!-- Login / Logout -->
+        <div class="d-flex justify-content-end mb-3">
+
+            {% if user.is_authenticated %}
+
+                <span class="me-3">
+                    Welcome, <strong>{{ user.username }}</strong>
+                </span>
+
+            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-sm me-2">
+            📊 Dashboard
+            </a>
+
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Logout
+                    </button>
+                </form>
+
+            {% else %}
+
+                <a href="{% url 'login' %}" class="btn btn-primary">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <!-- Dashboard -->
+        <div class="row text-center mb-4">
+            <div class="col">
+                <div class="alert alert-primary">
+                    <strong>Total:</strong> {{ total }}
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="alert alert-success">
+                    <strong>Completed:</strong> {{ completed }}
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="alert alert-warning">
+                    <strong>Pending:</strong> {{ pending }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <form method="GET" class="mb-3">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="🔍 Search Todo..."
+                value="{{ request.GET.search }}"
+            >
+        </form>
+
+        <!-- Add Todo -->
+        <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+        </div>
+
+        <div class="col-md-6 mb-3">
+            {{ form.priority.label_tag }}
+            {{ form.priority }}
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+        {{ form.due_date.label_tag }}
+        {{ form.due_date }}
+    </div>
+
+    <div class="mb-3">
+        {{ form.attachment.label_tag }}
+        {{ form.attachment }}
+    </div>
+
+    <div class="form-check mb-3">
+        {{ form.completed }}
+        {{ form.completed.label_tag }}
+    </div>
+
+    <button class="btn btn-success w-100">
+        Add Todo
+    </button>
+
+</form>
+
+        <hr>
+
+        <h4>Todo List</h4>
+{% for todo in todos %}
+
+<div class="card mt-2 p-3">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <!-- Left Side -->
+        <div>
+
+            {% if todo.completed %}
+                <h5>
+                    <a href="{% url 'toggle' todo.id %}" class="text-success text-decoration-none">
+                        ✅ {{ todo.title }}
+                    </a>
+                </h5>
+            {% else %}
+                <h5>
+                    <a href="{% url 'toggle' todo.id %}" class="text-dark text-decoration-none">
+                        ⬜ {{ todo.title }}
+                    </a>
+                </h5>
+            {% endif %}
+
+            {% if todo.description %}
+                <p class="text-muted mb-2">
+                    {{ todo.description }}
+                </p>
+            {% endif %}
+
+            <div class="mb-2">
+                <span class="badge bg-info">
+                    {{ todo.category }}
+                </span>
+
+                {% if todo.priority == "High" %}
+                    <span class="badge bg-danger">
+                        {{ todo.priority }}
+                    </span>
+                {% elif todo.priority == "Medium" %}
+                    <span class="badge bg-warning text-dark">
+                        {{ todo.priority }}
+                    </span>
+                {% else %}
+                    <span class="badge bg-success">
+                        {{ todo.priority }}
+                    </span>
+                {% endif %}
+           
+            </div>
+
+            {% if todo.due_date %}
+                <small class="text-muted d-block">
+                    📅 Due: {{ todo.due_date|date:"F d, Y" }}
+                </small>
+            {% endif %}
+            {% if todo.attachment %}
+     <br>
+            <a href="{{ todo.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+            📎 View Attachment
+            </a>
+             {% endif %}
+
+        </div>
+
+        <!-- Right Side -->
+        <div>
+            <a href="{% url 'update' todo.id %}" class="btn btn-warning btn-sm me-2">
+                Edit
+            </a>
+
+            <a href="{% url 'delete' todo.id %}" class="btn btn-danger btn-sm">
+                Delete
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="alert alert-warning">
+    No Todo Available
+</div>
+
+{% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
