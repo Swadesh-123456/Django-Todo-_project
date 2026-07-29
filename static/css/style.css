@@ -1,0 +1,91 @@
+body{
+    background:#f4f7fc;
+    transition:0.4s;
+}
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+
+.card{
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.dark-mode{
+    background:#121212 !important;
+    color:white !important;
+}
+
+.dark-mode .card{
+    background:#1f1f1f;
+    color:white;
+}
+
+.dark-mode .navbar{
+    background:#000 !important;
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select{
+    background:#2b2b2b;
+    color:white;
+    border:1px solid #555;
+}
+
+.dark-mode .text-muted{
+    color:#ccc !important;
+}
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode label,
+.dark-mode p,
+.dark-mode small{
+    color:white !important;
+}
+
+html,
+body{
+    min-height:100%;
+}
+
+.dark-mode{
+    background:#121212 !important;
+    color:#ffffff !important;
+}
+
+.dark-mode .container{
+    background:transparent !important;
+}
+
+.dark-mode .card{
+    background:#1f1f1f !important;
+    color:#fff !important;
+}
+
+.dark-mode .progress{
+    background:#333 !important;
+}
+
+.dark-mode .btn-outline-primary{
+    color:#fff;
+    border-color:#fff;
+}
+
+.dark-mode a{
+    color:#fff;
+}
+
+.dark-mode .badge{
+    color:#fff;
+}

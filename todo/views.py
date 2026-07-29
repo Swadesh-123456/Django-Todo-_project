@@ -1,3 +1,6 @@
+from django.contrib import messages
+
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -27,6 +30,7 @@ def home(request):
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
+             
             return redirect('/')
     else:
         form = TodoForm()
