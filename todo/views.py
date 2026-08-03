@@ -14,7 +14,6 @@ from django.contrib.auth import login
 from .models import Todo
 from .forms import TodoForm
 
-
 @login_required
 def home(request):
     search = request.GET.get('search')
@@ -26,12 +25,15 @@ def home(request):
 
     if request.method == "POST":
         form = TodoForm(request.POST, request.FILES)
+
         if form.is_valid():
             todo = form.save(commit=False)
             todo.user = request.user
             todo.save()
-             
+
+            messages.success(request, "Task added successfully!")
             return redirect('/')
+
     else:
         form = TodoForm()
 
@@ -41,10 +43,12 @@ def home(request):
         'total': todos.count(),
         'completed': todos.filter(completed=True).count(),
         'pending': todos.filter(completed=False).count(),
+        'todo_count': todos.filter(status='Todo').count(),
+        'in_progress_count': todos.filter(status='In Progress').count(),
+        'completed_status_count': todos.filter(status='Completed').count(),
     }
 
     return render(request, 'index.html', context)
-
 
 @login_required
 def delete_todo(request, id):
@@ -97,14 +101,23 @@ def dashboard(request):
 
     context = {
         "total": todos.count(),
+
         "completed": todos.filter(completed=True).count(),
         "pending": todos.filter(completed=False).count(),
+
+        "todo_count": todos.filter(status="Todo").count(),
+        "in_progress_count": todos.filter(status="In Progress").count(),
+        "completed_status_count": todos.filter(status="Completed").count(),
+
+        "high_priority": todos.filter(priority="High").count(),
+        "medium_priority": todos.filter(priority="Medium").count(),
+        "low_priority": todos.filter(priority="Low").count(),
+
         "completion_rate": (
             (todos.filter(completed=True).count() * 100) // todos.count()
             if todos.exists() else 0
-        )
-    }
-
+        ),
+        }
     return render(request, "dashboard.html", context)
 
 @api_view(['GET'])
@@ -124,11 +137,6 @@ def create_todo(request):
 
     return Response(serializer.errors, status=400)
 
-@api_view(['GET'])
-def todo_api(request):
-    todos = Todo.objects.all()
-    serializer = TodoSerializer(todos, many=True)
-    return Response(serializer.data)
 
 @api_view(['PUT'])
 def update_todo_api(request, id):

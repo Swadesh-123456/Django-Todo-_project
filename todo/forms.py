@@ -9,6 +9,7 @@ class TodoForm(forms.ModelForm):
             "description",
             "category",
             "priority",
+             "status",
             "completed",
             "due_date",
             "attachment",
@@ -33,6 +34,9 @@ class TodoForm(forms.ModelForm):
             "priority": forms.Select(attrs={
                 "class": "form-select"
             }),
+            "status": forms.Select(attrs={
+                "class": "form-select"
+         }),
 
             "due_date": forms.DateInput(attrs={
                 "class": "form-control",
