@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
-from .models import Todo
-from .forms import TodoForm
+from .models import Todo, Profile
+from .forms import TodoForm, ProfileForm
 from .serializers import TodoSerializer
 
 
@@ -28,7 +29,6 @@ def home(request):
             todo = form.save(commit=False)
             todo.user = request.user
 
-            # Status aur Completed ko sync rakho
             if todo.status == "Completed":
                 todo.completed = True
             else:
@@ -59,11 +59,15 @@ def home(request):
     return render(request, "index.html", context)
 
 
+
 @login_required
 def delete_todo(request, id):
     todo = get_object_or_404(Todo, id=id, user=request.user)
     todo.delete()
+
+    messages.success(request, "Task deleted successfully!")
     return redirect("/")
+
 
 
 @login_required
@@ -71,9 +75,15 @@ def update_todo(request, id):
     todo = get_object_or_404(Todo, id=id, user=request.user)
 
     if request.method == "POST":
-        form = TodoForm(request.POST, request.FILES, instance=todo)
+
+        form = TodoForm(
+            request.POST,
+            request.FILES,
+            instance=todo
+        )
 
         if form.is_valid():
+
             todo = form.save(commit=False)
 
             if todo.status == "Completed":
@@ -82,6 +92,7 @@ def update_todo(request, id):
                 todo.completed = False
 
             todo.save()
+
             messages.success(request, "Task updated successfully!")
             return redirect("/")
 
@@ -94,9 +105,15 @@ def update_todo(request, id):
     return render(request, "update.html", {"form": form})
 
 
+
 @login_required
 def toggle_complete(request, id):
-    todo = get_object_or_404(Todo, id=id, user=request.user)
+
+    todo = get_object_or_404(
+        Todo,
+        id=id,
+        user=request.user
+    )
 
     todo.completed = not todo.completed
 
@@ -110,84 +127,261 @@ def toggle_complete(request, id):
     return redirect("/")
 
 
+
 def signup(request):
+
     if request.method == "POST":
+
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
+
             user = form.save()
+
             login(request, user)
+
             return redirect("/")
+
+        else:
+            print(form.errors)
 
     else:
         form = UserCreationForm()
 
-    return render(request, "signup.html", {"form": form})
+
+    return render(
+        request,
+        "signup.html",
+        {"form": form}
+    )
+
+
+
+# ==========================
+# USER PROFILE PAGE
+# ==========================
+
+@login_required
+def profile(request):
+
+    
+    profile, created = Profile.objects.get_or_create(
+        user=request.user
+    )
+
+
+    if request.method == "POST":
+
+        form = ProfileForm(
+            request.POST,
+            request.FILES,
+            instance=profile
+        )
+
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Profile updated successfully!"
+            )
+
+            return redirect("profile")
+
+
+    else:
+
+        form = ProfileForm(
+            instance=profile
+        )
+
+
+    context = {
+
+        "form": form,
+
+        "profile": profile
+
+    }
+
+
+    return render(
+        request,
+        "profile.html",
+        context
+    )
+
 
 
 @login_required
 def dashboard(request):
-    todos = Todo.objects.filter(user=request.user)
+
+    todos = Todo.objects.filter(
+        user=request.user
+    )
+
 
     context = {
+
         "total": todos.count(),
-        "completed": todos.filter(completed=True).count(),
-        "pending": todos.filter(completed=False).count(),
 
-        "todo_count": todos.filter(status="Todo").count(),
-        "in_progress_count": todos.filter(status="In Progress").count(),
-        "completed_status_count": todos.filter(status="Completed").count(),
+        "completed": todos.filter(
+            completed=True
+        ).count(),
 
-        "high_priority": todos.filter(priority="High").count(),
-        "medium_priority": todos.filter(priority="Medium").count(),
-        "low_priority": todos.filter(priority="Low").count(),
+        "pending": todos.filter(
+            completed=False
+        ).count(),
+
+
+        "todo_count": todos.filter(
+            status="Todo"
+        ).count(),
+
+
+        "in_progress_count": todos.filter(
+            status="In Progress"
+        ).count(),
+
+
+        "completed_status_count": todos.filter(
+            status="Completed"
+        ).count(),
+
+
+        "high_priority": todos.filter(
+            priority="High"
+        ).count(),
+
+
+        "medium_priority": todos.filter(
+            priority="Medium"
+        ).count(),
+
+
+        "low_priority": todos.filter(
+            priority="Low"
+        ).count(),
+
 
         "completion_rate": (
-            (todos.filter(completed=True).count() * 100) // todos.count()
-            if todos.exists() else 0
+
+            (todos.filter(completed=True).count() * 100)
+            // todos.count()
+
+            if todos.exists()
+
+            else 0
+
         ),
+
     }
 
-    return render(request, "dashboard.html", context)
+
+    return render(
+        request,
+        "dashboard.html",
+        context
+    )
+
+
+
+# ==========================
+# API
+# ==========================
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def todo_api(request):
-    todos = Todo.objects.filter(user=request.user)
-    serializer = TodoSerializer(todos, many=True)
-    return Response(serializer.data)
+
+    todos = Todo.objects.filter(
+        user=request.user
+    )
+
+    serializer = TodoSerializer(
+        todos,
+        many=True
+    )
+
+    return Response(
+        serializer.data
+    )
+
 
 
 @api_view(["POST"])
 def create_todo(request):
-    serializer = TodoSerializer(data=request.data)
+
+    serializer = TodoSerializer(
+        data=request.data
+    )
+
 
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=201)
 
-    return Response(serializer.errors, status=400)
+        serializer.save()
+
+        return Response(
+            serializer.data,
+            status=201
+        )
+
+
+    return Response(
+        serializer.errors,
+        status=400
+    )
+
 
 
 @api_view(["PUT"])
 def update_todo_api(request, id):
-    todo = get_object_or_404(Todo, id=id)
 
-    serializer = TodoSerializer(todo, data=request.data)
+    todo = get_object_or_404(
+        Todo,
+        id=id
+    )
+
+
+    serializer = TodoSerializer(
+        todo,
+        data=request.data
+    )
+
 
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
 
-    return Response(serializer.errors, status=400)
+        serializer.save()
+
+        return Response(
+            serializer.data
+        )
+
+
+    return Response(
+        serializer.errors,
+        status=400
+    )
+
 
 
 @api_view(["DELETE"])
 def delete_todo_api(request, id):
-    todo = get_object_or_404(Todo, id=id)
+
+    todo = get_object_or_404(
+        Todo,
+        id=id
+    )
+
     todo.delete()
 
+
     return Response(
-        {"message": "Todo deleted successfully"},
-        status=200,
+        {
+            "message": "Todo deleted successfully"
+        },
+        status=200
     )
