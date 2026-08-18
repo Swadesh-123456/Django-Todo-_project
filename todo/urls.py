@@ -1,32 +1,91 @@
 from django.urls import path
 from . import views
 
-from django.conf import settings
-from django.conf.urls.static import static
-
 
 urlpatterns = [
 
-    path('', views.home, name='home'),
+    # =========================
+    # HOME
+    # =========================
 
-    path('delete/<int:id>/', views.delete_todo, name='delete'),
-
-    path('update/<int:id>/', views.update_todo, name='update'),
-
-    path('toggle/<int:id>/', views.toggle_complete, name='toggle'),
-
-    path('signup/', views.signup, name='signup'),
-
-    path("dashboard/", views.dashboard, name="dashboard"),
-
-    # Profile Page
-    path("profile/", views.profile, name="profile"),
+    path(
+        "",
+        views.home,
+        name="home"
+    ),
 
 
-    # API URLs
-    path("api/todos/", views.todo_api, name="todo_api"),
+    # =========================
+    # TODO
+    # =========================
 
-    path("api/create/", views.create_todo, name="create_todo"),
+    path(
+        "delete/<int:id>/",
+        views.delete_todo,
+        name="delete"
+    ),
+
+    path(
+        "update/<int:id>/",
+        views.update_todo,
+        name="update"
+    ),
+
+    path(
+        "toggle/<int:id>/",
+        views.toggle_complete,
+        name="toggle"
+    ),
+
+
+    # =========================
+    # AUTHENTICATION
+    # =========================
+
+    path(
+        "signup/",
+        views.signup,
+        name="signup"
+    ),
+
+
+    # =========================
+    # DASHBOARD
+    # =========================
+
+    path(
+        "dashboard/",
+        views.dashboard,
+        name="dashboard"
+    ),
+
+
+    # =========================
+    # PROFILE
+    # =========================
+
+    path(
+        "profile/",
+        views.profile,
+        name="profile"
+    ),
+
+
+    # =========================
+    # API
+    # =========================
+
+    path(
+        "api/todos/",
+        views.todo_api,
+        name="todo_api"
+    ),
+
+    path(
+        "api/create/",
+        views.create_todo,
+        name="create_todo"
+    ),
 
     path(
         "api/update/<int:id>/",
@@ -40,9 +99,4 @@ urlpatterns = [
         name="delete_todo_api"
     ),
 
-        
-
 ]
-
-
-

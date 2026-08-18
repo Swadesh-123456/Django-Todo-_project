@@ -1,345 +1,478 @@
 {% extends 'base.html' %}
 
+{% block title %}TaskFlow Pro - Todo List{% endblock %}
+
 {% block content %}
 
-<!-- Dashboard Cards -->
+<div class="taskflow-page">
 
+    <!-- =========================
+         DASHBOARD STAT CARDS
+    ========================== -->
 
-<div class="row g-3 mb-4">
+    <div class="row g-4 mb-4">
 
-    <div class="col-md-4">
-        <div class="card border-0 shadow text-center">
-            <div class="card-body">
-                <i class="bi bi-list-task fs-1 text-primary"></i>
-                <h3>{{ total }}</h3>
-                <p class="text-muted">Total Tasks</p>
+        <!-- Total Tasks -->
+        <div class="col-12 col-md-4">
+            <div class="card dashboard-stat-card total-card h-100">
+                <div class="card-body">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+
+                    <div>
+                        <h6>Total Tasks</h6>
+                        <h2>{{ total }}</h2>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="card border-0 shadow text-center">
-            <div class="card-body">
-                <i class="bi bi-check-circle-fill fs-1 text-success"></i>
-                <h3>{{ completed }}</h3>
-                <p class="text-muted">Completed</p>
+        <!-- Completed -->
+        <div class="col-12 col-md-4">
+            <div class="card dashboard-stat-card completed-card h-100">
+                <div class="card-body">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+
+                    <div>
+                        <h6>Completed</h6>
+                        <h2>{{ completed }}</h2>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="card border-0 shadow text-center">
-            <div class="card-body">
-                <i class="bi bi-hourglass-split fs-1 text-warning"></i>
-                <h3>{{ pending }}</h3>
-                <p class="text-muted">Pending</p>
+        <!-- Pending -->
+        <div class="col-12 col-md-4">
+            <div class="card dashboard-stat-card pending-card h-100">
+                <div class="card-body">
+
+                    <div class="stat-icon">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+
+                    <div>
+                        <h6>Pending</h6>
+                        <h2>{{ pending }}</h2>
+                    </div>
+
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
 
-<!-- Progress Bar -->
+    <!-- =========================
+         TASK PROGRESS
+    ========================== -->
 
-<div class="card border-0 shadow-sm rounded-4 mb-4">
-    <div class="card-body">
+    <div class="card dashboard-panel mb-4">
 
-        <h5 class="mb-3">
-            📊 Task Progress
-        </h5>
+        <div class="card-body">
 
-        <div class="progress" style="height: 25px;">
-            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-            role="progressbar"
-            style="width: {% widthratio completed total 100 %}%;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
 
-             {{ completed }}/{{ total }}
+                <h5 class="mb-0 fw-bold">
+                    📊 Task Progress
+                </h5>
+
+                <span class="progress-count">
+                    {{ completed }}/{{ total }}
+                </span>
 
             </div>
-      </div>
-    </div>
-</div>
 
+            <div class="progress task-progress">
 
+                <div
+                    class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style="width: {% if total %}{% widthratio completed total 100 %}{% else %}0{% endif %}%;">
+                </div>
 
-<!-- Search -->
+            </div>
 
-<form method="GET" class="mb-4">
-
-    <div class="input-group">
-
-        <input
-            type="text"
-            name="search"
-            class="form-control form-control-lg"
-            placeholder="🔍 Search your tasks..."
-            value="{{ request.GET.search }}">
-
-        <button class="btn btn-primary" type="submit">
-            <i class="bi bi-search"></i> Search
-        </button>
+        </div>
 
     </div>
 
-</form>
 
-<!-- Add Todo Form -->
+    <!-- =========================
+         SEARCH
+    ========================== -->
 
+    <div class="card dashboard-panel mb-4">
+
+        <div class="card-body">
+
+            <form method="GET">
+
+                <div class="input-group search-box">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="🔍 Search your tasks..."
+                        value="{{ request.GET.search }}"
+                    >
+
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                    >
+                        <i class="bi bi-search"></i>
+                        Search
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ADD TODO
+    ========================== -->
+
+    <div class="card dashboard-panel mb-4">
+
+        <div class="card-body">
+
+            <h4 class="section-title mb-4">
+                ➕ Add New Todo
+            </h4>
 
             <form method="POST" enctype="multipart/form-data">
 
+                {% csrf_token %}
 
-  {% csrf_token %}
+                <!-- Title -->
+
+                <div class="mb-3">
+
+                    {{ form.title.label_tag }}
+
+                    {{ form.title }}
+
+                </div>
 
 
+                <!-- Description -->
+
+                <div class="mb-3">
+
+                    {{ form.description.label_tag }}
+
+                    {{ form.description }}
+
+                </div>
 
 
-            <div class="mb-3">
+                <!-- Category / Priority / Status -->
 
-                   {{ form.title.label_tag }}
+                <div class="row">
 
-                   {{ form.title }}
+                    <div class="col-12 col-md-4 mb-3">
+
+                        {{ form.category.label_tag }}
+
+                        {{ form.category }}
+
+                    </div>
+
+
+                    <div class="col-12 col-md-4 mb-3">
+
+                        {{ form.priority.label_tag }}
+
+                        {{ form.priority }}
+
+                    </div>
+
+
+                    <div class="col-12 col-md-4 mb-3">
+
+                        {{ form.status.label_tag }}
+
+                        {{ form.status }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- Due Date -->
+
+                <div class="mb-3">
+
+                    {{ form.due_date.label_tag }}
+
+                    {{ form.due_date }}
+
+                </div>
+
+
+                <!-- Attachment -->
+
+                <div class="mb-3">
+
+                    {{ form.attachment.label_tag }}
+
+                    {{ form.attachment }}
+
+                </div>
+
+
+                <!-- Completed -->
+
+                <div class="form-check mb-4">
+
+                    {{ form.completed }}
+
+                    {{ form.completed.label_tag }}
+
+                </div>
+
+
+                <!-- Add Button -->
+
+                <button
+                    type="submit"
+                    class="btn btn-success add-todo-btn"
+                >
+                    <i class="bi bi-plus-circle"></i>
+                    Add Todo
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TODO LIST
+    ========================== -->
+
+    <div class="todo-list-section">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h4 class="todo-list-heading mb-0">
+                📋 Todo List
+            </h4>
+
+            <span class="task-count">
+                {{ total }} Tasks
+            </span>
+
+        </div>
+
+
+        {% for todo in todos %}
+
+        <div class="todo-card card mb-3">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <!-- TODO INFORMATION -->
+
+                    <div class="col-12 col-lg-8">
+
+                        <!-- Title -->
+
+                        {% if todo.completed %}
+
+                        <h5 class="todo-title">
+
+                            <a
+                                href="{% url 'toggle' todo.id %}"
+                                class="text-success text-decoration-none"
+                            >
+                                ✅ {{ todo.title }}
+                            </a>
+
+                        </h5>
+
+                        {% else %}
+
+                        <h5 class="todo-title">
+
+                            <a
+                                href="{% url 'toggle' todo.id %}"
+                                class="text-dark text-decoration-none"
+                            >
+                                ⬜ {{ todo.title }}
+                            </a>
+
+                        </h5>
+
+                        {% endif %}
+
+
+                        <!-- Description -->
+
+                        {% if todo.description %}
+
+                        <p class="todo-description mb-2">
+                            {{ todo.description }}
+                        </p>
+
+                        {% endif %}
+
+
+                        <!-- Badges -->
+
+                        <div class="todo-badges">
+
+                            <!-- Category -->
+
+                            <span class="badge bg-info">
+                                {{ todo.category }}
+                            </span>
+
+
+                            <!-- Priority -->
+
+                            {% if todo.priority == "High" %}
+
+                            <span class="badge bg-danger">
+                                🔴 {{ todo.priority }}
+                            </span>
+
+                            {% elif todo.priority == "Medium" %}
+
+                            <span class="badge bg-warning text-dark">
+                                🟡 {{ todo.priority }}
+                            </span>
+
+                            {% else %}
+
+                            <span class="badge bg-success">
+                                🟢 {{ todo.priority }}
+                            </span>
+
+                            {% endif %}
+
+
+                            <!-- Status -->
+
+                            {% if todo.status == "Todo" %}
+
+                            <span class="badge bg-secondary">
+                                🟡 {{ todo.status }}
+                            </span>
+
+                            {% elif todo.status == "In Progress" %}
+
+                            <span class="badge bg-primary">
+                                🔵 {{ todo.status }}
+                            </span>
+
+                            {% elif todo.status == "Completed" %}
+
+                            <span class="badge bg-success">
+                                🟢 {{ todo.status }}
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Due Date -->
+
+                        {% if todo.due_date %}
+
+                        <div class="todo-due-date">
+                            <i class="bi bi-calendar-event"></i>
+                            Due: {{ todo.due_date|date:"F d, Y" }}
+                        </div>
+
+                        {% endif %}
+
+
+                        <!-- Attachment -->
+
+                        {% if todo.attachment %}
+
+                        <div class="mt-2">
+
+                            <a
+                                href="{{ todo.attachment.url }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary"
+                            >
+                                <i class="bi bi-paperclip"></i>
+                                View Attachment
+                            </a>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+
+                    <div class="col-12 col-lg-4 mt-3 mt-lg-0">
+
+                        <div class="todo-actions">
+
+                            <a
+                                href="{% url 'update' todo.id %}"
+                                class="btn btn-warning btn-sm"
+                            >
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </a>
+
+
+                            <a
+                                href="{% url 'delete' todo.id %}"
+                                class="btn btn-danger btn-sm"
+                            >
+                                <i class="bi bi-trash"></i>
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
+        </div>
 
-        <div class="mb-3">
 
-        {{ form.description.label_tag }}
+        {% empty %}
 
-        {{ form.description }}
+        <div class="alert alert-warning text-center">
+            <i class="bi bi-info-circle"></i>
+            No Todo Available
+        </div>
 
-         </div>
+        {% endfor %}
 
-       <div class="row">
-
-    <div class="col-md-4 mb-3">
-        {{ form.category.label_tag }}
-        {{ form.category }}
-    </div>
-
-    <div class="col-md-4 mb-3">
-        {{ form.priority.label_tag }}
-        {{ form.priority }}
-    </div>
-
-    <div class="col-md-4 mb-3">
-        {{ form.status.label_tag }}
-        {{ form.status }}
     </div>
 
 </div>
-
-<div class="mb-3">
-    {{ form.due_date.label_tag }}
-    {{ form.due_date }}
-</div>
-
-<div class="mb-3">
-    {{ form.attachment.label_tag }}
-    {{ form.attachment }}
-</div>
-
-
-            <div class="form-check mb-3">
-
-
-                  {{ form.completed }}
-
-                  {{ form.completed.label_tag }}
-
-
-            </div>
-
-<button class="btn btn-success w-100">
-
-➕ Add Todo
-
-</button>
-</form>
-
-<hr>
-
-<h4>
-Todo List
-</h4>
-
-{% for todo in todos %}
-
-<div class="card mt-3 p-3">
-<div class="d-flex justify-content-between align-items-center">
-
-<div>
-
-
-<!-- Title -->
-
-{% if todo.completed %}
-
-<h5>
-
-<a href="{% url 'toggle' todo.id %}"
-class="text-success text-decoration-none">
-
-✅ {{ todo.title }}
-
-</a>
-
-</h5>
-{% else %}
-<h5>
-
-<a href="{% url 'toggle' todo.id %}"
-class="text-dark text-decoration-none">
-
-⬜ {{ todo.title }}
-
-</a>
-
-</h5>
-
-{% endif %}
-
-<!-- Description -->
-
-{% if todo.description %}
-<p class="text-muted">
-
-{{ todo.description }}
-
-</p>
-
-
-{% endif %}
-
-<!-- Category -->
-
-
-<span class="badge bg-info">
-
-{{ todo.category }}
-
-</span>
-
-<!-- Priority -->
-
-
-{% if todo.priority == "High" %}
-
-
-<span class="badge bg-danger">
-
-{{ todo.priority }}
-
-</span>
-
-{% elif todo.priority == "Medium" %}
-
-<span class="badge bg-warning text-dark">
-
-{{ todo.priority }}
-
-</span>
-
-{% else %}
-
-<span class="badge bg-success">
-
-{{ todo.priority }}
-
-</span>
-
-{% endif %}
-
-{% if todo.status == "Todo" %}
-
-<span class="badge bg-secondary">
-    🟡 {{ todo.status }}
-</span>
-
-{% elif todo.status == "In Progress" %}
-
-<span class="badge bg-primary">
-    🔵 {{ todo.status }}
-</span>
-
-{% elif todo.status == "Completed" %}
-
-<span class="badge bg-success">
-    🟢 {{ todo.status }}
-</span>
-
-{% endif %}
-
-<!-- Due Date -->
-
-
-{% if todo.due_date %}
-
-
-<small class="text-muted d-block mt-2">
-
-📅 Due:
-{{ todo.due_date|date:"F d, Y" }}
-
-</small>
-
-
-{% endif %}
-
-<!-- Attachment -->
-
-{% if todo.attachment %}
-
-<a href="{{ todo.attachment.url }}"
-target="_blank"
-class="btn btn-sm btn-outline-primary mt-2">
-
-📎 View Attachment
-</a>
-
-{% endif %}
-
-</div>
-
-<!-- Buttons -->
-
-
-<div>
-<a href="{% url 'update' todo.id %}"
-class="btn btn-warning btn-sm me-2">
-
-✏️ Edit
-
-</a>
-
-<a href="{% url 'delete' todo.id %}"
-class="btn btn-danger btn-sm">
-
-🗑 Delete
-
-
-</a>
-</div>
-
-</div>
-
-</div>
-
-
-
-
-
-{% empty %}
-
-<div class="alert alert-warning">
-
-No Todo Available
-
-</div>
-
-{% endfor %}
 
 {% endblock %}
-
-
