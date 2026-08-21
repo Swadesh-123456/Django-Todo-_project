@@ -29,81 +29,95 @@
 
 <body>
 
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+<!-- =========================
+     PROFESSIONAL NAVBAR
+========================= -->
 
-<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+<nav class="navbar navbar-expand-lg shadow-sm">
 
     <div class="container-fluid px-4">
 
         <!-- Brand -->
-        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
-            <i class="bi bi-check2-square"></i>
-            TaskFlow Pro
+        <a class="navbar-brand fw-bold d-flex align-items-center"
+           href="{% url 'home' %}">
+
+            <span class="brand-icon">
+                <i class="bi bi-check2-square"></i>
+            </span>
+
+            <span>TaskFlow Pro</span>
+
         </a>
 
 
+        <!-- Right Side -->
         <div class="ms-auto d-flex align-items-center gap-2">
 
             {% if user.is_authenticated %}
 
-            <!-- Theme Button -->
-            <button
-                id="theme-toggle"
-                type="button"
-                class="theme-toggle"
-                title="Toggle Dark Mode"
-                aria-label="Toggle Dark Mode"
-            >
-                <i id="theme-icon" class="bi bi-moon-fill"></i>
-            </button>
-
-
-            <!-- Username -->
-            <span class="navbar-user">
-                <i class="bi bi-person-circle"></i>
-                {{ user.username }}
-            </span>
-
-
-            <!-- Dashboard -->
-            <a
-                href="{% url 'dashboard' %}"
-                class="btn btn-primary btn-sm"
-            >
-                <i class="bi bi-speedometer2"></i>
-                Dashboard
-            </a>
-
-
-            <!-- Profile -->
-            <a
-                href="{% url 'profile' %}"
-                class="btn btn-outline-light btn-sm"
-            >
-                <i class="bi bi-person"></i>
-                Profile
-            </a>
-
-
-            <!-- Logout -->
-            <form
-                method="POST"
-                action="{% url 'logout' %}"
-                class="logout-form"
-            >
-                {% csrf_token %}
-
+                <!-- Theme -->
                 <button
-                    type="submit"
-                    class="btn btn-danger btn-sm"
-                >
-                    <i class="bi bi-box-arrow-right"></i>
-                    Logout
+                    id="theme-toggle"
+                    type="button"
+                    class="theme-toggle"
+                    title="Toggle Dark Mode"
+                    aria-label="Toggle Dark Mode">
+
+                    <i id="theme-icon"
+                       class="bi bi-moon-fill"></i>
+
                 </button>
 
-            </form>
+
+                <!-- User -->
+                <a href="{% url 'profile' %}"
+                   class="navbar-user">
+
+                    <i class="bi bi-person-circle"></i>
+
+                    <span>
+                        {{ user.username }}
+                    </span>
+
+                </a>
+
+
+                <!-- Dashboard -->
+                <a href="{% url 'dashboard' %}"
+                   class="btn btn-primary btn-sm nav-btn">
+
+                    <i class="bi bi-speedometer2"></i>
+                    Dashboard
+
+                </a>
+
+
+                <!-- Profile -->
+                <a href="{% url 'profile' %}"
+                   class="btn btn-outline-light btn-sm nav-btn">
+
+                    <i class="bi bi-person"></i>
+                    Profile
+
+                </a>
+
+
+                <!-- Logout -->
+                <form method="POST"
+                      action="{% url 'logout' %}"
+                      class="logout-form">
+
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="btn btn-danger btn-sm nav-btn">
+
+                        <i class="bi bi-box-arrow-right"></i>
+                        Logout
+
+                    </button>
+
+                </form>
 
             {% endif %}
 
@@ -154,82 +168,47 @@
 ===================================================== -->
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
 
-    const themeButton = document.getElementById("theme-toggle");
-    const themeIcon = document.getElementById("theme-icon");
+    const themeToggle = document.getElementById("theme-toggle");
 
-    if (!themeButton || !themeIcon) {
-        return;
-    }
+    if (!themeToggle) return;
 
+    function applyTheme(theme) {
 
-    /* -----------------------------------------
-       UPDATE ICON
-    ----------------------------------------- */
-
-    function updateThemeIcon() {
-
-        if (document.body.classList.contains("dark-mode")) {
-
-            themeIcon.className = "bi bi-sun-fill";
-
+        if (theme === "dark") {
+            document.body.classList.add("dark-mode");
+            themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+            themeToggle.title = "Switch to Light Mode";
         } else {
-
-            themeIcon.className = "bi bi-moon-fill";
-
+            document.body.classList.remove("dark-mode");
+            themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+            themeToggle.title = "Switch to Dark Mode";
         }
-
     }
 
+    // Load saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
 
-    /* -----------------------------------------
-       LOAD SAVED THEME
-    ----------------------------------------- */
+    applyTheme(savedTheme);
 
-    const savedTheme = localStorage.getItem("theme");
+    // Toggle theme
+    themeToggle.addEventListener("click", function () {
 
-    if (savedTheme === "dark") {
+        const isDark =
+            document.body.classList.contains("dark-mode");
 
-        document.body.classList.add("dark-mode");
+        const newTheme = isDark ? "light" : "dark";
 
-    } else {
+        localStorage.setItem("theme", newTheme);
 
-        document.body.classList.remove("dark-mode");
-
-    }
-
-    updateThemeIcon();
-
-
-    /* -----------------------------------------
-       TOGGLE THEME
-    ----------------------------------------- */
-
-    themeButton.addEventListener("click", function () {
-
-        document.body.classList.toggle("dark-mode");
-
-
-        if (document.body.classList.contains("dark-mode")) {
-
-            localStorage.setItem("theme", "dark");
-
-        } else {
-
-            localStorage.setItem("theme", "light");
-
-        }
-
-
-        updateThemeIcon();
-
+        applyTheme(newTheme);
     });
 
 });
-
 </script>
+
+
 
 
 <!-- Bootstrap JS -->
