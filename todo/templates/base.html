@@ -6,7 +6,7 @@
 
     <title>{% block title %}TaskFlow Pro{% endblock %}</title>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap 5 -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -29,97 +29,132 @@
 
 <body>
 
-<!-- =========================
-     PROFESSIONAL NAVBAR
-========================= -->
+<!-- =====================================================
+     PROFESSIONAL RESPONSIVE NAVBAR
+===================================================== -->
 
 <nav class="navbar navbar-expand-lg shadow-sm">
 
     <div class="container-fluid px-4">
 
         <!-- Brand -->
-        <a class="navbar-brand fw-bold d-flex align-items-center"
-           href="{% url 'home' %}">
-
+        <a
+            class="navbar-brand fw-bold d-flex align-items-center"
+            href="{% url 'home' %}"
+        >
             <span class="brand-icon">
                 <i class="bi bi-check2-square"></i>
             </span>
 
             <span>TaskFlow Pro</span>
-
         </a>
 
 
-        <!-- Right Side -->
-        <div class="ms-auto d-flex align-items-center gap-2">
-
-            {% if user.is_authenticated %}
-
-                <!-- Theme -->
-                <button
-                    id="theme-toggle"
-                    type="button"
-                    class="theme-toggle"
-                    title="Toggle Dark Mode"
-                    aria-label="Toggle Dark Mode">
-
-                    <i id="theme-icon"
-                       class="bi bi-moon-fill"></i>
-
-                </button>
+        <!-- Mobile Menu Button -->
+        <button
+            class="navbar-toggler d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <i class="bi bi-list"></i>
+        </button>
 
 
-                <!-- User -->
-                <a href="{% url 'profile' %}"
-                   class="navbar-user">
+        <!-- Navbar Menu -->
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavbar"
+        >
 
-                    <i class="bi bi-person-circle"></i>
+            <div class="ms-auto d-flex align-items-center gap-2 navbar-actions">
 
-                    <span>
-                        {{ user.username }}
-                    </span>
+                {% if user.is_authenticated %}
 
-                </a>
-
-
-                <!-- Dashboard -->
-                <a href="{% url 'dashboard' %}"
-                   class="btn btn-primary btn-sm nav-btn">
-
-                    <i class="bi bi-speedometer2"></i>
-                    Dashboard
-
-                </a>
-
-
-                <!-- Profile -->
-                <a href="{% url 'profile' %}"
-                   class="btn btn-outline-light btn-sm nav-btn">
-
-                    <i class="bi bi-person"></i>
-                    Profile
-
-                </a>
-
-
-                <!-- Logout -->
-                <form method="POST"
-                      action="{% url 'logout' %}"
-                      class="logout-form">
-
-                    {% csrf_token %}
-
-                    <button type="submit"
-                            class="btn btn-danger btn-sm nav-btn">
-
-                        <i class="bi bi-box-arrow-right"></i>
-                        Logout
-
+                    <!-- Theme Toggle -->
+                    <button
+                        id="theme-toggle"
+                        type="button"
+                        class="theme-toggle"
+                        title="Toggle Dark Mode"
+                        aria-label="Toggle Dark Mode"
+                    >
+                        <i
+                            id="theme-icon"
+                            class="bi bi-moon-fill"
+                        ></i>
                     </button>
 
-                </form>
 
-            {% endif %}
+                    <!-- User -->
+                    <a
+                        href="{% url 'profile' %}"
+                        class="navbar-user"
+                    >
+                        <i class="bi bi-person-circle"></i>
+
+                        <span>
+                            {{ user.username }}
+                        </span>
+                    </a>
+
+
+                    <!-- Dashboard -->
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="btn btn-primary btn-sm nav-btn"
+                    >
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+
+                    <!-- Profile -->
+                    <a
+                        href="{% url 'profile' %}"
+                        class="btn btn-outline-light btn-sm nav-btn"
+                    >
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+
+
+                    <!-- Logout -->
+                    <form
+                        method="POST"
+                        action="{% url 'logout' %}"
+                        class="logout-form"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-sm nav-btn"
+                        >
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <!-- Login -->
+                    <a
+                        href="{% url 'login' %}"
+                        class="btn btn-primary btn-sm nav-btn"
+                    >
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Login
+                    </a>
+
+                {% endif %}
+
+            </div>
 
         </div>
 
@@ -155,7 +190,7 @@
         <small>
             © 2026 TaskFlow Pro
             <span class="footer-separator">|</span>
-            Built with ❤️ using Django & MySQL
+            Built with ❤️ using Django & PostgreSQL
         </small>
 
     </div>
@@ -168,54 +203,90 @@
 ===================================================== -->
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const themeToggle = document.getElementById("theme-toggle");
 
-    if (!themeToggle) return;
+    if (!themeToggle) {
+        return;
+    }
+
+
+    /* =================================================
+       APPLY THEME
+    ================================================= */
 
     function applyTheme(theme) {
 
+        const icon = document.getElementById("theme-icon");
+
         if (theme === "dark") {
+
             document.body.classList.add("dark-mode");
-            themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+
+            if (icon) {
+                icon.className = "bi bi-sun-fill";
+            }
+
             themeToggle.title = "Switch to Light Mode";
+
         } else {
+
             document.body.classList.remove("dark-mode");
-            themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+
+            if (icon) {
+                icon.className = "bi bi-moon-fill";
+            }
+
             themeToggle.title = "Switch to Dark Mode";
         }
     }
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem("theme") || "light";
+
+    /* =================================================
+       LOAD SAVED THEME
+    ================================================= */
+
+    const savedTheme =
+        localStorage.getItem("theme") || "light";
 
     applyTheme(savedTheme);
 
-    // Toggle theme
+
+    /* =================================================
+       TOGGLE THEME
+    ================================================= */
+
     themeToggle.addEventListener("click", function () {
 
         const isDark =
             document.body.classList.contains("dark-mode");
 
-        const newTheme = isDark ? "light" : "dark";
+        const newTheme =
+            isDark ? "light" : "dark";
 
-        localStorage.setItem("theme", newTheme);
+        localStorage.setItem(
+            "theme",
+            newTheme
+        );
 
         applyTheme(newTheme);
+
     });
 
 });
+
 </script>
 
 
-
-
-<!-- Bootstrap JS -->
+<!-- =====================================================
+     BOOTSTRAP JS
+===================================================== -->
 
 <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+></script>
 
 </body>
 </html>

@@ -1342,3 +1342,146 @@ body.dark-mode .theme-toggle:hover {
         height: 35px;
     }
 }
+
+/* =====================================================
+   RESPONSIVE NAVBAR
+===================================================== */
+
+.navbar {
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar-toggler {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 7px 11px;
+    font-size: 24px;
+    background: #ffffff;
+    color: #212529;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-actions {
+    flex-wrap: nowrap;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-btn {
+    white-space: nowrap;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+
+/* =====================================================
+   TABLET + MOBILE
+===================================================== */
+
+@media (max-width: 991.98px) {
+
+    .navbar .container-fluid {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+    }
+
+    .navbar-brand {
+        font-size: 21px;
+    }
+
+    .navbar-toggler {
+        margin-left: auto;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    .navbar-actions {
+        width: 100%;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center;
+        gap: 8px !important;
+        padding: 14px 0 6px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .navbar-user {
+        padding: 7px 12px;
+    }
+
+    .nav-btn {
+        min-height: 42px;
+        padding: 8px 14px;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .navbar .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .navbar-actions {
+        justify-content: stretch;
+    }
+
+    .navbar-user {
+        width: 100%;
+        justify-content: center;
+        padding: 9px;
+        border-radius: 8px;
+    }
+
+    .navbar-actions .nav-btn {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .logout-form {
+        flex: 1;
+    }
+
+    .logout-form .nav-btn {
+        width: 100%;
+    }
+}
+
+
+/* =====================================================
+   DARK MODE NAVBAR
+===================================================== */
+
+body.dark-mode .navbar-toggler {
+    background: #1e293b;
+    color: #ffffff;
+    border-color: #475569;
+}
+
+body.dark-mode .navbar-actions {
+    border-color: #334155;
+}
