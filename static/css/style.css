@@ -1,4 +1,8 @@
 ﻿/* =========================================================
+   TASKFLOW PRO - CLEAN RESPONSIVE STYLE
+========================================================= */
+
+/* =========================================================
    GLOBAL RESET
 ========================================================= */
 
@@ -10,18 +14,34 @@
 }
 
 html {
+    width: 100%;
     min-height: 100%;
     overflow-x: hidden;
-    overflow-y: auto;
 }
 
 body {
+    width: 100%;
     min-height: 100vh;
-    background: #f4f7fb;
+    margin: 0;
+    background: #f5f7fb;
+    color: #212529;
     overflow-x: hidden;
-    overflow-y: auto;
     position: relative;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+    -webkit-tap-highlight-color: transparent;
+}
+
 
 /* =========================================================
    BACKGROUND DECORATION
@@ -32,11 +52,13 @@ body::before {
     position: fixed;
     width: 350px;
     height: 350px;
-    background: rgba(79, 70, 229, 0.08);
-    border-radius: 50%;
     top: -120px;
     left: -120px;
+
+    background: rgba(79, 70, 229, 0.07);
+    border-radius: 50%;
     filter: blur(60px);
+
     z-index: 0;
     pointer-events: none;
 }
@@ -46,14 +68,17 @@ body::after {
     position: fixed;
     width: 400px;
     height: 400px;
-    background: rgba(6, 182, 212, 0.08);
-    border-radius: 50%;
-    bottom: -150px;
     right: -150px;
+    bottom: -150px;
+
+    background: rgba(6, 182, 212, 0.07);
+    border-radius: 50%;
     filter: blur(70px);
+
     z-index: 0;
     pointer-events: none;
 }
+
 
 /* =========================================================
    NAVBAR
@@ -61,34 +86,265 @@ body::after {
 
 .navbar {
     position: relative;
-    z-index: 100;
+    z-index: 1000;
+
+    width: 100%;
+    min-height: 64px;
+
+    background: linear-gradient(
+        135deg,
+        #111827,
+        #1e293b
+    ) !important;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar .container-fluid {
+    width: 100%;
+    max-width: 100%;
 }
 
 .navbar-brand {
+    display: flex;
+    align-items: center;
+
+    color: #ffffff !important;
+    text-decoration: none !important;
+
     font-size: 21px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    white-space: nowrap;
 }
 
-.navbar-brand i {
-    margin-right: 5px;
+.navbar-brand:hover {
+    color: #ffffff !important;
+    text-decoration: none !important;
 }
 
-.navbar .btn {
-    border-radius: 8px;
+
+/* =========================================================
+   BRAND ICON
+========================================================= */
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 9px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #6366f1
+    );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 15px rgba(79, 70, 229, 0.35);
 }
 
-.navbar form {
-    margin: 0;
+.brand-icon i {
+    font-size: 20px;
 }
+
+
+/* =========================================================
+   NAVBAR ACTIONS
+========================================================= */
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    max-width: 200px;
+
+    padding: 7px 11px;
+
+    border-radius: 9px;
+
+    color: #ffffff !important;
+    text-decoration: none !important;
+
+    font-weight: 500;
+
+    transition: all 0.25s ease;
+}
+
+.navbar-user:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.10);
+    text-decoration: none !important;
+}
+
+.navbar-user i {
+    flex-shrink: 0;
+    font-size: 19px;
+}
+
+.navbar-user span {
+    display: block;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   NAV BUTTONS
+========================================================= */
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 36px;
+
+    border-radius: 9px !important;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition: all 0.25s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-1px);
+}
+
+.logout-form {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   THEME BUTTON
+========================================================= */
+
+.theme-toggle {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+.theme-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+.theme-toggle i {
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.navbar-toggler {
+    display: none;
+
+    width: 44px;
+    height: 40px;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 10px !important;
+
+    background: rgba(255, 255, 255, 0.08) !important;
+
+    color: #ffffff !important;
+
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: none !important;
+}
+
+.navbar-toggler i {
+    font-size: 25px;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+
 
 /* =========================================================
    MAIN CONTENT
 ========================================================= */
 
-body > .container,
-.container {
+.main-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+
+    width: 100%;
+    min-height: calc(100vh - 130px);
+
+    overflow-x: hidden;
 }
+
+.main-content > .container {
+    width: 100%;
+    max-width: 1320px;
+}
+
 
 /* =========================================================
    LOGIN CARD
@@ -99,7 +355,7 @@ body > .container,
     z-index: 10;
 
     width: 430px;
-    max-width: 90%;
+    max-width: calc(100% - 30px);
 
     margin: 50px auto;
 
@@ -114,16 +370,13 @@ body > .container,
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.25);
 
-    color: #fff;
+    color: #ffffff;
 
     animation: fadeIn 0.8s ease;
 }
-
-/* =========================================================
-   LOGIN ANIMATION
-========================================================= */
 
 @keyframes fadeIn {
 
@@ -138,6 +391,7 @@ body > .container,
     }
 }
 
+
 /* =========================================================
    LOGO
 ========================================================= */
@@ -149,8 +403,8 @@ body > .container,
     margin: 0 auto;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 
@@ -162,17 +416,19 @@ body > .container,
 
     font-size: 40px;
 
-    color: #fff;
+    color: #ffffff;
 }
+
 
 /* =========================================================
    HEADINGS
 ========================================================= */
 
 h2 {
-    color: #fff;
+    color: #ffffff;
     font-weight: 700;
 }
+
 
 /* =========================================================
    TEXT
@@ -180,41 +436,32 @@ h2 {
 
 .text-muted,
 .text-secondary {
-    color: #f5f5f5 !important;
+    color: #64748b !important;
 }
 
+
 /* =========================================================
-   FORM LABEL
+   FORMS
 ========================================================= */
+
 .form-label {
     color: #212529;
     font-weight: 600;
 }
 
-/* =========================================================
-   FORM INPUT
-========================================================= */
-
 .form-control {
+    width: 100%;
     height: 50px;
+
     border-radius: 12px;
+
     background: #ffffff;
-    border: 1px solid #ced4da;
-    color: #212529;
-    transition: 0.3s;
-}
 
-select.form-select {
-    height: 50px;
-    border-radius: 12px;
-    background-color: #ffffff;
-    color: #212529;
     border: 1px solid #ced4da;
-}
 
-select.form-select:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+    color: #212529;
+
+    transition: all 0.25s ease;
 }
 
 .form-control::placeholder {
@@ -223,37 +470,39 @@ select.form-select:focus {
 
 .form-control:focus {
     background: #ffffff;
+
     border-color: #4f46e5;
+
     color: #212529;
-    box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+
+    box-shadow:
+        0 0 0 0.2rem rgba(79, 70, 229, 0.15);
 }
 
-/* =========================================================
-   INPUT GROUP
-========================================================= */
+select.form-select {
+    width: 100%;
+    min-height: 50px;
 
-.input-group .btn {
+    border-radius: 12px;
 
-    border-radius: 0 12px 12px 0;
+    background-color: #ffffff;
 
-    border: 1px solid rgba(255, 255, 255, 0.30);
+    color: #212529;
 
-    background: rgba(255, 255, 255, 0.15);
-
-    color: #fff;
+    border: 1px solid #ced4da;
 }
 
-.input-group .btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
+select.form-select:focus {
+    border-color: #4f46e5;
 
-/* =========================================================
-   CHECKBOX
-========================================================= */
+    box-shadow:
+        0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+}
 
 .form-check-input {
     width: 18px;
     height: 18px;
+
     cursor: pointer;
 }
 
@@ -261,62 +510,53 @@ select.form-select:focus {
     color: #212529;
     font-weight: 500;
 }
+
+
 /* =========================================================
    LOGIN BUTTON
 ========================================================= */
 
 .btn-login {
-
     width: 100%;
-
     height: 50px;
 
     border: none;
-
     border-radius: 12px;
 
     font-size: 17px;
-
     font-weight: 600;
 
-    background: #fff;
-
+    background: #ffffff;
     color: #4f46e5;
 
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .btn-login:hover {
-
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 
     background: #f1f1f1;
 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
 
 /* =========================================================
    LINKS
 ========================================================= */
 
 a {
-    color: #fff;
+    color: #4f46e5;
     text-decoration: none;
-    transition: 0.3s;
+    transition: 0.25s ease;
 }
 
 a:hover {
-    color: #ffe082;
+    color: #3730a3;
     text-decoration: underline;
 }
 
-/* =========================================================
-   HR
-========================================================= */
-
-hr {
-    border-color: rgba(255, 255, 255, 0.25);
-}
 
 /* =========================================================
    ALERT
@@ -327,367 +567,19 @@ hr {
     border-radius: 12px;
 }
 
+
 /* =========================================================
    DASHBOARD
 ========================================================= */
 
 .dashboard-container {
-
     position: relative;
-
     z-index: 2;
 
     padding-top: 30px;
-
     padding-bottom: 50px;
 
-    min-height: auto;
-}
-
-/* =========================================================
-   DASHBOARD STAT CARDS
-========================================================= */
-
-.stat-card {
-
-    border: none;
-
-    border-radius: 16px;
-
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-
-    transform: translateY(-5px);
-
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
-}
-
-.stat-number {
-
-    font-size: 32px;
-
-    font-weight: 700;
-}
-
-/* =========================================================
-   DASHBOARD CHART CARDS
-========================================================= */
-
-.chart-card {
-
-    border: none;
-
-    border-radius: 18px;
-
-    background: #ffffff;
-
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* =========================================================
-   CHART CONTAINER
-========================================================= */
-
-.chart-container {
-
-    position: relative;
-
     width: 100%;
-
-    height: 320px;
-}
-
-/* =========================================================
-   PROGRESS BAR
-========================================================= */
-
-.progress {
-
-    border-radius: 15px;
-
-    overflow: hidden;
-}
-
-.progress-bar {
-
-    font-weight: 600;
-}
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-
-    position: relative;
-
-    z-index: 2;
-
-    background: rgba(255, 255, 255, 0.10);
-
-    color: #fff;
-}
-
-/* =========================================================
-   DARK MODE
-========================================================= */
-
-body.dark-mode {
-
-    background: #121212;
-
-    color: #fff;
-}
-
-body.dark-mode .navbar {
-    background: #000 !important;
-}
-
-body.dark-mode .chart-card {
-    background: #1e1e1e;
-    color: #fff;
-}
-
-body.dark-mode .chart-card h5 {
-    color: #fff;
-}
-
-body.dark-mode .stat-card {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode footer {
-    background: #111;
-}
-
-body.dark-mode .text-muted,
-body.dark-mode .text-secondary {
-    color: #ccc !important;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-
-    .dashboard-container {
-
-        padding-top: 20px;
-
-        padding-bottom: 40px;
-    }
-
-    .chart-container {
-
-        height: 280px;
-    }
-
-    .stat-number {
-
-        font-size: 26px;
-    }
-
-    .login-card {
-
-        width: 90%;
-
-        padding: 30px;
-
-        margin-top: 30px;
-
-        margin-bottom: 30px;
-    }
-
-    .navbar .container-fluid {
-
-        padding-left: 12px;
-
-        padding-right: 12px;
-    }
-}
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 576px) {
-
-    .login-card {
-
-        width: 92%;
-
-        padding: 25px;
-    }
-
-    .logo {
-
-        width: 70px;
-
-        height: 70px;
-
-        font-size: 30px;
-    }
-
-    h2 {
-
-        font-size: 28px;
-    }
-
-    .navbar-brand {
-
-        font-size: 18px;
-    }
-
-    .chart-container {
-
-        height: 250px;
-    }
-}
-
-/* =========================================================
-   TODO LIST
-========================================================= */
-
-.todo-list {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-.todo-item {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-}
-
-.todo-item h5 {
-    color: #212529;
-    font-weight: 600;
-}
-
-.todo-item p {
-    color: #555;
-}
-
-.todo-date {
-    color: #dc3545 !important;
-    font-weight: 600;
-    display: inline-block;
-    margin-top: 5px;
-}
-
-.todo-category {
-    color: #6c757d;
-    font-weight: 600;
-}
-
-.todo-priority {
-    color: #212529;
-    font-weight: 600;
-}
-
-/* =========================================================
-   TODO LIST CARDS
-========================================================= */
-
-.todo-card {
-    background: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
-    color: #212529;
-    transition: all 0.3s ease;
-}
-
-.todo-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
-}
-
-.todo-card h5 {
-    margin-bottom: 8px;
-}
-
-.todo-card h5 a {
-    color: #212529;
-}
-
-.todo-card h5 a:hover {
-    text-decoration: none !important;
-    color: #4f46e5;
-}
-
-.todo-due-date {
-    display: block;
-    margin-top: 10px;
-    padding: 8px 12px;
-    width: fit-content;
-    background: #f1f5f9;
-    border-radius: 8px;
-    color: #dc3545 !important;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* Todo List heading */
-
-.todo-list-heading {
-    color: #212529;
-    font-weight: 700;
-    margin-top: 25px;
-    margin-bottom: 15px;
-}
-
-/* Page background */
-
-body {
-    background: #f5f7fb !important;
-}
-
-
-/* =========================================================
-   TODO CARDS
-========================================================= */
-
-.todo-card {
-    background: #ffffff !important;
-    border: 1px solid #e8ecf3 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.07) !important;
-    transition: all 0.25s ease;
-}
-
-.todo-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12) !important;
-}
-
-.todo-due-date {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 7px 12px;
-    background: #fff1f2;
-    border-radius: 8px;
-    color: #dc3545 !important;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* =========================================================
-   TASKFLOW MAIN PAGE
-========================================================= */
-
-.taskflow-page {
-    position: relative;
-    z-index: 2;
-    padding-top: 10px;
-    padding-bottom: 40px;
 }
 
 
@@ -695,23 +587,34 @@ body {
    DASHBOARD STAT CARDS
 ========================================================= */
 
+.stat-card,
 .dashboard-stat-card {
     border: none !important;
+
     border-radius: 18px !important;
+
     overflow: hidden;
-    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08) !important;
+
     transition: all 0.25s ease;
+
+    box-shadow:
+        0 6px 20px rgba(15, 23, 42, 0.08) !important;
 }
 
+.stat-card:hover,
 .dashboard-stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12) !important;
+
+    box-shadow:
+        0 12px 28px rgba(15, 23, 42, 0.12) !important;
 }
 
 .dashboard-stat-card .card-body {
     padding: 25px;
+
     display: flex;
     align-items: center;
+
     gap: 18px;
 }
 
@@ -727,13 +630,23 @@ body {
     font-size: 32px;
 }
 
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+}
+
 .stat-icon {
     width: 58px;
     height: 58px;
+
+    flex-shrink: 0;
+
     border-radius: 14px;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     font-size: 28px;
 }
 
@@ -754,14 +667,19 @@ body {
 
 
 /* =========================================================
-   GENERAL PANELS
+   DASHBOARD PANELS
 ========================================================= */
 
-.dashboard-panel {
+.dashboard-panel,
+.chart-card {
     border: none !important;
+
     border-radius: 18px !important;
+
     background: #ffffff !important;
-    box-shadow: 0 5px 20px rgba(15, 23, 42, 0.07) !important;
+
+    box-shadow:
+        0 5px 20px rgba(15, 23, 42, 0.07) !important;
 }
 
 .dashboard-panel .card-body {
@@ -775,24 +693,54 @@ body {
 
 
 /* =========================================================
+   CHART
+========================================================= */
+
+.chart-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+
+    height: 320px;
+}
+
+
+/* =========================================================
    PROGRESS
 ========================================================= */
+
+.progress {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    font-weight: 600;
+}
+
+.task-progress {
+    height: 22px;
+
+    border-radius: 20px;
+
+    background: #e9eef5;
+}
 
 .progress-count {
     font-weight: 700;
     color: #16a34a;
 }
 
-.task-progress {
-    height: 22px;
-    border-radius: 20px;
-    background: #e9eef5;
-}
-
 
 /* =========================================================
    SEARCH
 ========================================================= */
+
+.search-box {
+    width: 100%;
+    max-width: 100%;
+}
 
 .search-box .form-control {
     height: 50px;
@@ -808,8 +756,10 @@ body {
 ========================================================= */
 
 .add-todo-btn {
-    height: 50px;
+    min-height: 50px;
+
     border-radius: 12px;
+
     font-weight: 600;
 }
 
@@ -818,18 +768,68 @@ body {
    TODO LIST
 ========================================================= */
 
+.todo-list {
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
 .todo-list-heading {
     color: #0f172a;
+
     font-weight: 700;
+
+    margin-top: 25px;
+    margin-bottom: 15px;
 }
 
 .task-count {
+    display: inline-block;
+
     background: #e0e7ff;
     color: #4f46e5;
+
     padding: 6px 12px;
+
     border-radius: 20px;
+
     font-size: 13px;
     font-weight: 600;
+}
+
+
+/* =========================================================
+   TODO ITEM
+========================================================= */
+
+.todo-item {
+    width: 100%;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 12px;
+}
+
+.todo-item h5 {
+    color: #212529;
+    font-weight: 600;
+}
+
+.todo-item p {
+    color: #555;
 }
 
 
@@ -838,26 +838,48 @@ body {
 ========================================================= */
 
 .todo-card {
+    width: 100%;
+    max-width: 100%;
+
     border: 1px solid #e5e7eb !important;
+
     border-radius: 16px !important;
+
     background: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06) !important;
+
+    color: #212529;
+
+    box-shadow:
+        0 4px 16px rgba(15, 23, 42, 0.06) !important;
+
     transition: all 0.25s ease;
+
+    overflow: hidden;
 }
 
 .todo-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.11) !important;
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.11) !important;
 }
 
 .todo-card .card-body {
     padding: 20px;
 }
 
+.todo-card h5 {
+    margin-bottom: 8px;
+}
 
-/* =========================================================
-   TODO TEXT
-========================================================= */
+.todo-card h5 a {
+    color: #212529;
+}
+
+.todo-card h5 a:hover {
+    color: #4f46e5;
+    text-decoration: none !important;
+}
 
 .todo-title {
     font-weight: 700;
@@ -868,25 +890,64 @@ body {
     color: #64748b;
 }
 
+
+/* =========================================================
+   TODO BADGES
+========================================================= */
+
 .todo-badges {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 7px;
+
+    max-width: 100%;
 }
 
 
 /* =========================================================
-   DUE DATE
+   TODO DATE
 ========================================================= */
 
 .todo-due-date {
     display: inline-block;
+
+    max-width: 100%;
+
     margin-top: 12px;
+
     padding: 8px 12px;
+
     border-radius: 9px;
+
     background: #fff1f2;
+
     color: #dc3545 !important;
+
     font-size: 14px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+.todo-date {
+    color: #dc3545 !important;
+
+    font-weight: 600;
+
+    display: inline-block;
+
+    margin-top: 5px;
+}
+
+.todo-category {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.todo-priority {
+    color: #212529;
     font-weight: 600;
 }
 
@@ -897,8 +958,16 @@ body {
 
 .todo-actions {
     display: flex;
+
+    align-items: center;
+
     justify-content: flex-end;
+
+    flex-wrap: wrap;
+
     gap: 8px;
+
+    max-width: 100%;
 }
 
 .todo-actions .btn {
@@ -907,10 +976,335 @@ body {
 
 
 /* =========================================================
-   MOBILE
+   TASKFLOW PAGE
 ========================================================= */
 
-@media (max-width: 768px) {
+.taskflow-page {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    padding: 18px 10px;
+
+    background: rgba(255, 255, 255, 0.10);
+
+    color: #64748b;
+
+    overflow: hidden;
+}
+
+.footer-separator {
+    margin: 0 5px;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark-mode {
+    background: #0f172a !important;
+
+    color: #f8fafc !important;
+}
+
+
+/* Navbar */
+
+body.dark-mode .navbar {
+    background: #020617 !important;
+
+    border-bottom:
+        1px solid #1e293b;
+}
+
+body.dark-mode .navbar-user {
+    color: #ffffff !important;
+}
+
+body.dark-mode .navbar-user:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .theme-toggle {
+    background: #1e293b;
+
+    border-color: #475569;
+
+    color: #facc15;
+}
+
+body.dark-mode .theme-toggle:hover {
+    background: #334155;
+}
+
+
+/* Mobile toggler */
+
+body.dark-mode .navbar-toggler {
+    background: #1e293b !important;
+
+    border-color: #475569 !important;
+
+    color: #ffffff !important;
+}
+
+
+/* Cards */
+
+body.dark-mode .card,
+body.dark-mode .todo-card,
+body.dark-mode .dashboard-panel,
+body.dark-mode .dashboard-stat-card,
+body.dark-mode .chart-card {
+    background: #1e293b !important;
+
+    color: #f8fafc !important;
+
+    border-color: #334155 !important;
+}
+
+body.dark-mode .dashboard-stat-card h2,
+body.dark-mode .dashboard-stat-card h6 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .section-title,
+body.dark-mode .todo-list-heading {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .todo-card h5 a {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .todo-description {
+    color: #cbd5e1 !important;
+}
+
+
+/* Todo list */
+
+body.dark-mode .todo-list,
+body.dark-mode .todo-item {
+    background: #1e293b !important;
+
+    color: #f8fafc !important;
+
+    border-color: #334155;
+}
+
+body.dark-mode .todo-item h5,
+body.dark-mode .todo-priority {
+    color: #f8fafc;
+}
+
+body.dark-mode .todo-item p {
+    color: #cbd5e1;
+}
+
+
+/* Inputs */
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #334155 !important;
+
+    color: #f8fafc !important;
+
+    border-color: #475569 !important;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .form-label,
+body.dark-mode .form-check-label,
+body.dark-mode label {
+    color: #e2e8f0 !important;
+}
+
+
+/* Progress */
+
+body.dark-mode .task-progress {
+    background: #334155 !important;
+}
+
+
+/* Due date */
+
+body.dark-mode .todo-due-date {
+    background: #451a1a !important;
+
+    color: #fca5a5 !important;
+}
+
+
+/* Footer */
+
+body.dark-mode footer {
+    background: #020617 !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE NAVBAR
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .navbar {
+        min-height: 60px;
+    }
+
+    .navbar .container-fluid {
+        width: 100%;
+
+        padding:
+            10px 12px !important;
+
+        display: flex;
+
+        flex-wrap: wrap;
+    }
+
+    .navbar-brand {
+        font-size: 19px;
+
+        max-width:
+            calc(100% - 55px);
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+    .brand-icon {
+        width: 34px;
+        height: 34px;
+
+        margin-right: 7px;
+    }
+
+    .navbar-toggler {
+        display: inline-flex !important;
+
+        margin-left: auto;
+
+        flex-shrink: 0;
+    }
+
+    .navbar-collapse {
+        width: 100% !important;
+
+        flex-basis: 100% !important;
+
+        margin-top: 10px;
+    }
+
+    .navbar-actions {
+        width: 100%;
+
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        align-items: stretch !important;
+
+        gap: 8px !important;
+
+        padding:
+            12px 0 5px;
+
+        border-top:
+            1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .theme-toggle {
+        width: 100%;
+
+        height: 44px;
+    }
+
+    .navbar-user {
+        width: 100%;
+
+        max-width: 100%;
+
+        min-height: 44px;
+
+        justify-content: center;
+
+        padding: 10px;
+    }
+
+    .navbar-user span {
+        max-width:
+            calc(100% - 35px);
+    }
+
+    .navbar-actions .nav-btn {
+        width: 100% !important;
+
+        min-height: 44px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+    .logout-form {
+        width: 100%;
+    }
+
+    .logout-form .nav-btn {
+        width: 100% !important;
+    }
+
+
+    /* Main */
+
+    .main-content > .container {
+        width: 100%;
+
+        max-width: 100%;
+
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    /* Dashboard */
+
+    .dashboard-container {
+        padding-top: 20px;
+
+        padding-bottom: 40px;
+    }
 
     .dashboard-stat-card .card-body {
         padding: 20px;
@@ -924,536 +1318,34 @@ body {
         padding: 20px;
     }
 
+    .chart-container {
+        height: 280px;
+    }
+
+
+    /* Todo */
+
     .todo-actions {
         justify-content: flex-start;
+
         margin-top: 10px;
     }
 
-    .todo-due-date {
-        font-size: 13px;
+    .todo-card .card-body {
+        padding: 17px;
     }
-}
-
-/* =========================================================
-   DARK MODE
-========================================================= */
-
-body.dark-mode {
-    background: #111827 !important;
-    color: #f8fafc;
-}
-
-/* Main panels */
-
-body.dark-mode .dashboard-panel {
-    background: #1f2937 !important;
-    color: #f8fafc;
-}
-
-/* Stat cards */
-
-body.dark-mode .dashboard-stat-card {
-    background: #1f2937 !important;
-}
-
-body.dark-mode .dashboard-stat-card h2,
-body.dark-mode .dashboard-stat-card h6 {
-    color: #f8fafc;
-}
-
-/* Section headings */
-
-body.dark-mode .section-title,
-body.dark-mode .todo-list-heading {
-    color: #f8fafc;
-}
-
-/* Todo cards */
-
-body.dark-mode .todo-card {
-    background: #1f2937 !important;
-    border-color: #374151 !important;
-}
-
-body.dark-mode .todo-card .text-dark {
-    color: #f8fafc !important;
-}
-
-body.dark-mode .todo-description {
-    color: #cbd5e1 !important;
-}
-
-/* Search input */
-
-body.dark-mode .form-control {
-    background: #374151 !important;
-    color: #f8fafc !important;
-    border-color: #4b5563 !important;
-}
-
-body.dark-mode .form-control::placeholder {
-    color: #cbd5e1 !important;
-}
-
-/* Select */
-
-body.dark-mode select.form-select {
-    background-color: #374151 !important;
-    color: #f8fafc !important;
-    border-color: #4b5563 !important;
-}
-
-/* Labels */
-
-body.dark-mode .form-label,
-body.dark-mode .form-check-label {
-    color: #f8fafc !important;
-}
-
-/* Due date */
-
-body.dark-mode .todo-due-date {
-    background: #451a1a;
-    color: #fca5a5 !important;
-}
-
-/* Footer */
-
-body.dark-mode footer {
-    background: #111827 !important;
-    color: #cbd5e1;
-}
-
-body.dark-mode footer .text-muted {
-    color: #cbd5e1 !important;
-}
-
-/* Progress */
-
-body.dark-mode .task-progress {
-    background: #374151;
-}
-
-/* =========================================================
-   PROFESSIONAL DARK MODE
-========================================================= */
-
-body.dark-mode {
-    background: #0f172a !important;
-    color: #f8fafc !important;
-}
-
-/* Main container text */
-
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6 {
-    color: #f8fafc !important;
-}
-
-/* Cards */
-
-body.dark-mode .card,
-body.dark-mode .todo-card,
-body.dark-mode .dashboard-panel,
-body.dark-mode .dashboard-stat-card,
-body.dark-mode .chart-card {
-    background: #1e293b !important;
-    color: #f8fafc !important;
-    border-color: #334155 !important;
-}
-
-/* Todo title */
-
-body.dark-mode .todo-card h5 a {
-    color: #f8fafc !important;
-}
-
-/* Description */
-
-body.dark-mode .todo-description,
-body.dark-mode .todo-card .text-muted {
-    color: #cbd5e1 !important;
-}
-
-/* Labels */
-
-body.dark-mode label,
-body.dark-mode .form-label,
-body.dark-mode .form-check-label {
-    color: #e2e8f0 !important;
-}
-
-/* Inputs */
-
-body.dark-mode .form-control,
-body.dark-mode .form-select {
-    background-color: #334155 !important;
-    color: #f8fafc !important;
-    border-color: #475569 !important;
-}
-
-/* Input placeholder */
-
-body.dark-mode .form-control::placeholder {
-    color: #94a3b8 !important;
-}
-
-/* Search */
-
-body.dark-mode .input-group .form-control {
-    background: #1e293b !important;
-}
-
-/* Progress */
-
-body.dark-mode .task-progress {
-    background: #334155 !important;
-}
-
-/* Due date */
-
-body.dark-mode .todo-due-date {
-    background: #451a1a !important;
-    color: #fca5a5 !important;
-}
-
-/* Footer */
-
-body.dark-mode footer {
-    background: #0f172a !important;
-    border-color: #334155 !important;
-}
-
-/* Theme button */
-
-#theme-toggle {
-    width: 40px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-}
-
-#theme-toggle:hover {
-    transform: translateY(-2px);
-}
-
-/* =========================================================
-   PROFESSIONAL TASKFLOW NAVBAR
-========================================================= */
-
-.navbar {
-    min-height: 64px;
-    background: linear-gradient(
-        135deg,
-        #111827,
-        #1e293b
-    ) !important;
-
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-
-/* Brand */
-
-.navbar-brand {
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-size: 21px;
-    letter-spacing: 0.3px;
-}
-
-.brand-icon {
-    width: 38px;
-    height: 38px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-right: 9px;
-
-    border-radius: 10px;
-
-    background: linear-gradient(
-        135deg,
-        #4f46e5,
-        #6366f1
-    );
-
-    color: #ffffff;
-
-    box-shadow: 0 5px 15px rgba(79,70,229,0.35);
-}
-
-
-/* User */
-
-.navbar-user {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    padding: 7px 11px;
-
-    border-radius: 9px;
-
-    color: #ffffff !important;
-    text-decoration: none !important;
-
-    font-weight: 500;
-
-    transition: 0.25s ease;
-}
-
-.navbar-user:hover {
-    background: rgba(255,255,255,0.10);
-}
-
-.navbar-user i {
-    font-size: 19px;
-}
-
-
-/* Buttons */
-
-.nav-btn {
-    border-radius: 9px !important;
-    font-weight: 500;
-
-    transition: all 0.25s ease;
-}
-
-.nav-btn:hover {
-    transform: translateY(-2px);
-}
-
-
-/* Theme Button */
-
-.theme-toggle {
-    width: 38px;
-    height: 38px;
-
-    border: 1px solid rgba(255,255,255,0.25);
-
-    border-radius: 10px;
-
-    background: rgba(255,255,255,0.08);
-
-    color: #ffffff;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-
-    transition: all 0.25s ease;
-}
-
-.theme-toggle:hover {
-    background: rgba(255,255,255,0.18);
-
-    transform: translateY(-2px);
-}
-
-.theme-toggle i {
-    font-size: 16px;
-}
-
-
-/* Logout */
-
-.logout-form {
-    margin: 0;
 }
 
 
 /* =========================================================
-   DARK MODE NAVBAR
+   MOBILE
 ========================================================= */
 
-body.dark-mode .navbar {
-    background: #020617 !important;
-
-    border-bottom: 1px solid #1e293b;
-}
-
-body.dark-mode .navbar-brand {
-    color: #ffffff !important;
-}
-
-body.dark-mode .navbar-user {
-    color: #ffffff !important;
-}
-
-body.dark-mode .navbar-user i {
-    color: #cbd5e1;
-}
-
-body.dark-mode .theme-toggle {
-    background: #1e293b;
-    border-color: #475569;
-    color: #facc15;
-}
-
-body.dark-mode .theme-toggle:hover {
-    background: #334155;
-}
-
-
-/* =====================================================
-   RESPONSIVE NAVBAR - FINAL
-===================================================== */
-
-.navbar {
-    position: relative;
-    z-index: 1000;
-    width: 100%;
-}
-
-.navbar-toggler {
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    padding: 7px 11px;
-    font-size: 24px;
-    background: #ffffff;
-    color: #212529;
-}
-
-.navbar-toggler:focus {
-    box-shadow: none;
-}
-
-.navbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.navbar-user {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    white-space: nowrap;
-    max-width: 220px;
-}
-
-.navbar-user span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.nav-btn {
-    white-space: nowrap;
-}
-
-.logout-form {
-    margin: 0 !important;
-}
-
-
-/* =====================================================
-   TABLET / MOBILE
-===================================================== */
-
-@media (max-width: 991.98px) {
-
-    .navbar .container-fluid {
-        width: 100%;
-        max-width: 100%;
-        padding: 10px 12px !important;
-        flex-wrap: wrap;
-    }
-
-    .navbar-brand {
-        font-size: 20px;
-        max-width: calc(100% - 55px);
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .brand-icon {
-        width: 34px;
-        height: 34px;
-        flex-shrink: 0;
-    }
-
-    .navbar-toggler {
-        display: block;
-        margin-left: auto;
-        flex-shrink: 0;
-    }
-
-    .navbar-collapse {
-        width: 100% !important;
-        flex-basis: 100% !important;
-        margin-top: 10px;
-    }
-
-    .navbar-actions {
-        width: 100%;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 8px !important;
-        padding: 12px 0 5px;
-        border-top: 1px solid #e5e7eb;
-    }
-
-    .theme-toggle {
-        width: 100%;
-        height: 44px;
-    }
-
-    .navbar-user {
-        width: 100%;
-        max-width: 100%;
-        justify-content: center;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-
-    .navbar-user span {
-        display: inline !important;
-        max-width: calc(100% - 35px);
-    }
-
-    .navbar-actions .nav-btn {
-        width: 100% !important;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-    }
-
-    .logout-form {
-        width: 100%;
-    }
-
-    .logout-form .nav-btn {
-        width: 100% !important;
-    }
-}
-
-
-/* =====================================================
-   SMALL PHONE
-===================================================== */
-
-@media (max-width: 480px) {
+@media (max-width: 576px) {
 
     .navbar .container-fluid {
         padding-left: 10px !important;
+
         padding-right: 10px !important;
     }
 
@@ -1461,24 +1353,191 @@ body.dark-mode .theme-toggle:hover {
         font-size: 18px;
     }
 
-    .navbar-user {
-        font-size: 15px;
+    .brand-icon {
+        width: 32px;
+        height: 32px;
     }
 
-    .navbar-actions {
-        padding-left: 0;
-        padding-right: 0;
+    .brand-icon i {
+        font-size: 17px;
+    }
+
+    .navbar-toggler {
+        width: 42px;
+        height: 38px;
+    }
+
+
+    /* Login */
+
+    .login-card {
+        width: calc(100% - 20px);
+
+        max-width: 430px;
+
+        padding: 25px 20px;
+
+        margin:
+            30px auto;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+
+    /* Dashboard */
+
+    .stat-number {
+        font-size: 26px;
+    }
+
+    .dashboard-stat-card h2 {
+        font-size: 26px;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+
+        font-size: 23px;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+
+    /* Search */
+
+    .search-box .btn {
+        min-width: 0;
+    }
+
+
+    /* Todo */
+
+    .todo-list {
+        padding: 14px;
+    }
+
+    .todo-card .card-body {
+        padding: 15px;
+    }
+
+    .todo-actions {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+    .todo-actions .btn {
+        flex: 1 1 auto;
+
+        min-width: 80px;
+    }
+
+
+    /* Footer */
+
+    footer {
+        font-size: 13px;
+
+        padding:
+            15px 8px;
     }
 }
 
 
-/* =====================================================
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .navbar-brand {
+        font-size: 16px;
+    }
+
+    .brand-icon {
+        width: 30px;
+        height: 30px;
+
+        margin-right: 5px;
+    }
+
+    .navbar-toggler {
+        width: 40px;
+        height: 36px;
+    }
+
+    .login-card {
+        padding: 20px 15px;
+    }
+
+    .todo-actions .btn {
+        width: 100%;
+
+        flex: 1 1 100%;
+    }
+}
+
+
+/* =========================================================
    PREVENT HORIZONTAL SCROLL
-===================================================== */
+========================================================= */
 
 html,
 body {
     width: 100%;
     max-width: 100%;
+
     overflow-x: hidden !important;
+}
+
+
+/* =========================================================
+   SAFE RESPONSIVE TABLE
+========================================================= */
+
+.table-responsive {
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+   SAFE RESPONSIVE IMAGES
+========================================================= */
+
+.profile-image,
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================================================
+   BUTTON TOUCH AREA
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    button,
+    .btn,
+    a.btn {
+        touch-action: manipulation;
+    }
 }

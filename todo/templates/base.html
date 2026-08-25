@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>{% block title %}TaskFlow Pro{% endblock %}</title>
+    <title>
+        {% block title %}TaskFlow Pro{% endblock %}
+    </title>
 
-    <!-- Bootstrap 5 -->
+    <!-- =====================================================
+         BOOTSTRAP 5
+    ====================================================== -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
-    <!-- Bootstrap Icons -->
+    <!-- =====================================================
+         BOOTSTRAP ICONS
+    ====================================================== -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -20,37 +29,50 @@
 
     {% load static %}
 
-    <!-- Custom CSS -->
+    <!-- =====================================================
+         CUSTOM CSS
+    ====================================================== -->
     <link
         rel="stylesheet"
         href="{% static 'css/style.css' %}"
     >
 </head>
 
+
 <body>
 
-<!-- =====================================================
-     PROFESSIONAL RESPONSIVE NAVBAR
-===================================================== -->
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
 
 <nav class="navbar navbar-expand-lg shadow-sm">
 
     <div class="container-fluid px-4">
 
-        <!-- Brand -->
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
         <a
             class="navbar-brand fw-bold d-flex align-items-center"
             href="{% url 'home' %}"
         >
+
             <span class="brand-icon">
                 <i class="bi bi-check2-square"></i>
             </span>
 
-            <span>TaskFlow Pro</span>
+            <span class="brand-text">
+                TaskFlow Pro
+            </span>
+
         </a>
 
 
-        <!-- Mobile Menu Button -->
+        <!-- =================================================
+             MOBILE MENU BUTTON
+        ================================================== -->
+
         <button
             class="navbar-toggler d-lg-none"
             type="button"
@@ -60,101 +82,154 @@
             aria-expanded="false"
             aria-label="Toggle navigation"
         >
+
             <i class="bi bi-list"></i>
+
         </button>
 
 
-        <!-- Navbar Menu -->
+        <!-- =================================================
+             NAVBAR COLLAPSE
+        ================================================== -->
+
         <div
             class="collapse navbar-collapse"
             id="mainNavbar"
         >
 
-            <div class="ms-auto d-flex align-items-center gap-2 navbar-actions">
+            {% if user.is_authenticated %}
 
-                {% if user.is_authenticated %}
+            <div class="navbar-actions">
 
-                    <!-- Theme Toggle -->
+
+                <!-- =========================================
+                     THEME BUTTON
+                ========================================== -->
+
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    class="theme-toggle"
+                    title="Toggle Dark Mode"
+                    aria-label="Toggle Dark Mode"
+                >
+
+                    <i
+                        id="theme-icon"
+                        class="bi bi-moon-fill"
+                    ></i>
+
+                </button>
+
+
+                <!-- =========================================
+                     USERNAME
+                ========================================== -->
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="navbar-user"
+                    title="Profile"
+                >
+
+                    <i class="bi bi-person-circle"></i>
+
+                    <span>
+                        {{ user.username }}
+                    </span>
+
+                </a>
+
+
+                <!-- =========================================
+                     DASHBOARD
+                ========================================== -->
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="btn btn-primary btn-sm nav-btn"
+                >
+
+                    <i class="bi bi-speedometer2"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- =========================================
+                     PROFILE
+                ========================================== -->
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="btn btn-outline-light btn-sm nav-btn"
+                >
+
+                    <i class="bi bi-person"></i>
+
+                    <span>
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <!-- =========================================
+                     LOGOUT
+                ========================================== -->
+
+                <form
+                    method="POST"
+                    action="{% url 'logout' %}"
+                    class="logout-form"
+                >
+
+                    {% csrf_token %}
+
                     <button
-                        id="theme-toggle"
-                        type="button"
-                        class="theme-toggle"
-                        title="Toggle Dark Mode"
-                        aria-label="Toggle Dark Mode"
+                        type="submit"
+                        class="btn btn-danger btn-sm nav-btn"
                     >
-                        <i
-                            id="theme-icon"
-                            class="bi bi-moon-fill"
-                        ></i>
-                    </button>
 
-
-                    <!-- User -->
-                    <a
-                        href="{% url 'profile' %}"
-                        class="navbar-user"
-                    >
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-box-arrow-right"></i>
 
                         <span>
-                            {{ user.username }}
+                            Logout
                         </span>
-                    </a>
 
+                    </button>
 
-                    <!-- Dashboard -->
-                    <a
-                        href="{% url 'dashboard' %}"
-                        class="btn btn-primary btn-sm nav-btn"
-                    >
-                        <i class="bi bi-speedometer2"></i>
-                        <span>Dashboard</span>
-                    </a>
-
-
-                    <!-- Profile -->
-                    <a
-                        href="{% url 'profile' %}"
-                        class="btn btn-outline-light btn-sm nav-btn"
-                    >
-                        <i class="bi bi-person"></i>
-                        <span>Profile</span>
-                    </a>
-
-
-                    <!-- Logout -->
-                    <form
-                        method="POST"
-                        action="{% url 'logout' %}"
-                        class="logout-form"
-                    >
-
-                        {% csrf_token %}
-
-                        <button
-                            type="submit"
-                            class="btn btn-danger btn-sm nav-btn"
-                        >
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Logout</span>
-                        </button>
-
-                    </form>
-
-                {% else %}
-
-                    <!-- Login -->
-                    <a
-                        href="{% url 'login' %}"
-                        class="btn btn-primary btn-sm nav-btn"
-                    >
-                        <i class="bi bi-box-arrow-in-right"></i>
-                        Login
-                    </a>
-
-                {% endif %}
+                </form>
 
             </div>
+
+            {% else %}
+
+            <!-- =============================================
+                 LOGIN
+            ============================================== -->
+
+            <div class="navbar-actions">
+
+                <a
+                    href="{% url 'login' %}"
+                    class="btn btn-primary btn-sm nav-btn"
+                >
+
+                    <i class="bi bi-box-arrow-in-right"></i>
+
+                    <span>
+                        Login
+                    </span>
+
+                </a>
+
+            </div>
+
+            {% endif %}
 
         </div>
 
@@ -163,9 +238,9 @@
 </nav>
 
 
-<!-- =====================================================
+<!-- =========================================================
      MAIN CONTENT
-===================================================== -->
+========================================================= -->
 
 <main class="main-content">
 
@@ -179,18 +254,24 @@
 </main>
 
 
-<!-- =====================================================
+<!-- =========================================================
      FOOTER
-===================================================== -->
+========================================================= -->
 
 <footer>
 
     <div class="container text-center">
 
         <small>
+
             © 2026 TaskFlow Pro
-            <span class="footer-separator">|</span>
+
+            <span class="footer-separator">
+                |
+            </span>
+
             Built with ❤️ using Django & PostgreSQL
+
         </small>
 
     </div>
@@ -198,55 +279,78 @@
 </footer>
 
 
-<!-- =====================================================
+<!-- =========================================================
      THEME JAVASCRIPT
-===================================================== -->
+========================================================= -->
 
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const themeToggle = document.getElementById("theme-toggle");
+    const themeToggle =
+        document.getElementById("theme-toggle");
+
+    const themeIcon =
+        document.getElementById("theme-icon");
+
+
+    /* =====================================================
+       STOP IF THEME BUTTON DOES NOT EXIST
+    ===================================================== */
 
     if (!themeToggle) {
         return;
     }
 
 
-    /* =================================================
+    /* =====================================================
        APPLY THEME
-    ================================================= */
+    ===================================================== */
 
     function applyTheme(theme) {
-
-        const icon = document.getElementById("theme-icon");
 
         if (theme === "dark") {
 
             document.body.classList.add("dark-mode");
 
-            if (icon) {
-                icon.className = "bi bi-sun-fill";
+            if (themeIcon) {
+                themeIcon.className =
+                    "bi bi-sun-fill";
             }
 
-            themeToggle.title = "Switch to Light Mode";
+            themeToggle.title =
+                "Switch to Light Mode";
+
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to Light Mode"
+            );
 
         } else {
 
-            document.body.classList.remove("dark-mode");
+            document.body.classList.remove(
+                "dark-mode"
+            );
 
-            if (icon) {
-                icon.className = "bi bi-moon-fill";
+            if (themeIcon) {
+                themeIcon.className =
+                    "bi bi-moon-fill";
             }
 
-            themeToggle.title = "Switch to Dark Mode";
+            themeToggle.title =
+                "Switch to Dark Mode";
+
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to Dark Mode"
+            );
         }
     }
 
 
-    /* =================================================
+    /* =====================================================
        LOAD SAVED THEME
-    ================================================= */
+    ===================================================== */
 
     const savedTheme =
         localStorage.getItem("theme") || "light";
@@ -254,39 +358,45 @@ document.addEventListener("DOMContentLoaded", function () {
     applyTheme(savedTheme);
 
 
-    /* =================================================
-       TOGGLE THEME
-    ================================================= */
+    /* =====================================================
+       THEME TOGGLE
+    ===================================================== */
 
-    themeToggle.addEventListener("click", function () {
+    themeToggle.addEventListener(
+        "click",
+        function () {
 
-        const isDark =
-            document.body.classList.contains("dark-mode");
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
 
-        const newTheme =
-            isDark ? "light" : "dark";
+            const newTheme =
+                isDark ? "light" : "dark";
 
-        localStorage.setItem(
-            "theme",
-            newTheme
-        );
+            localStorage.setItem(
+                "theme",
+                newTheme
+            );
 
-        applyTheme(newTheme);
+            applyTheme(newTheme);
 
-    });
+        }
+    );
 
 });
 
 </script>
 
 
-<!-- =====================================================
-     BOOTSTRAP JS
-===================================================== -->
+<!-- =========================================================
+     BOOTSTRAP JAVASCRIPT
+========================================================= -->
 
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 ></script>
+
 
 </body>
 </html>
